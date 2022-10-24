@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="healthOrganizationDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Covid19_Vaccine">
+    <Key>
+      <PropertyRef Name="IdPatient" />
+      <PropertyRef Name="DateOfVaccine" />
+    </Key>
+    <Property Name="IdPatient" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="DateOfVaccine" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="NumberOfVaccine" Type="Int32" Nullable="false" />
+    <Property Name="Creator_" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK__Covid19_V__IdPat__36B12243" FromRole="Covid19_Vaccine" ToRole="Patient" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Birth" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Telephone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="StartCovid19" Type="DateTime" Precision="0" />
+    <Property Name="EndCovid19" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Covid19_Vaccine" Relationship="Self.FK__Covid19_V__IdPat__36B12243" FromRole="Patient" ToRole="Covid19_Vaccine" />
+  </EntityType>
+  <Association Name="FK__Covid19_V__IdPat__36B12243">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="Covid19_Vaccine" Type="Self.Covid19_Vaccine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Covid19_Vaccine">
+        <PropertyRef Name="IdPatient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="healthOrganizationDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Covid19_Vaccine" EntityType="Self.Covid19_Vaccine" />
+    <EntitySet Name="Patients" EntityType="Self.Patient" />
+    <AssociationSet Name="FK__Covid19_V__IdPat__36B12243" Association="Self.FK__Covid19_V__IdPat__36B12243">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="Covid19_Vaccine" EntitySet="Covid19_Vaccine" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="healthOrganizationDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Covid19_Vaccine">
+          <Key>
+            <PropertyRef Name="IdPatient" />
+            <PropertyRef Name="DateOfVaccine" />
+          </Key>
+          <Property Name="IdPatient" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="DateOfVaccine" Type="date" Nullable="false" />
+          <Property Name="NumberOfVaccine" Type="int" Nullable="false" />
+          <Property Name="Creator " Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Birth" Type="date" Nullable="false" />
+          <Property Name="Telephone" Type="nchar" MaxLength="10" />
+          <Property Name="Phone" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="StartCovid19" Type="date" />
+          <Property Name="EndCovid19" Type="date" />
+        </EntityType>
+        <Association Name="FK__Covid19_V__IdPat__36B12243">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="Covid19_Vaccine" Type="Self.Covid19_Vaccine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Covid19_Vaccine">
+              <PropertyRef Name="IdPatient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="healthOrganizationDBModelStoreContainer">
+          <EntitySet Name="Covid19_Vaccine" EntityType="Self.Covid19_Vaccine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Covid19_V__IdPat__36B12243" Association="Self.FK__Covid19_V__IdPat__36B12243">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="Covid19_Vaccine" EntitySet="Covid19_Vaccine" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="healthOrganizationDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Covid19_Vaccine">
+          <Key>
+            <PropertyRef Name="IdPatient" />
+            <PropertyRef Name="DateOfVaccine" />
+          </Key>
+          <Property Name="IdPatient" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="DateOfVaccine" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NumberOfVaccine" Type="Int32" Nullable="false" />
+          <Property Name="Creator_" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Patient" Relationship="Self.FK__Covid19_V__IdPat__36B12243" FromRole="Covid19_Vaccine" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="Patient">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Birth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Telephone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="StartCovid19" Type="DateTime" Precision="0" />
+          <Property Name="EndCovid19" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Covid19_Vaccine" Relationship="Self.FK__Covid19_V__IdPat__36B12243" FromRole="Patient" ToRole="Covid19_Vaccine" />
+        </EntityType>
+        <Association Name="FK__Covid19_V__IdPat__36B12243">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="Covid19_Vaccine" Type="Self.Covid19_Vaccine" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Covid19_Vaccine">
+              <PropertyRef Name="IdPatient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="healthOrganizationDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Covid19_Vaccine" EntityType="Self.Covid19_Vaccine" />
+          <EntitySet Name="Patients" EntityType="Self.Patient" />
+          <AssociationSet Name="FK__Covid19_V__IdPat__36B12243" Association="Self.FK__Covid19_V__IdPat__36B12243">
+            <End Role="Patient" EntitySet="Patients" />
+            <End Role="Covid19_Vaccine" EntitySet="Covid19_Vaccine" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="healthOrganizationDBModelStoreContainer" CdmEntityContainer="healthOrganizationDBEntities">
+          <EntitySetMapping Name="Covid19_Vaccine">
+            <EntityTypeMapping TypeName="healthOrganizationDBModel.Covid19_Vaccine">
+              <MappingFragment StoreEntitySet="Covid19_Vaccine">
+                <ScalarProperty Name="IdPatient" ColumnName="IdPatient" />
+                <ScalarProperty Name="DateOfVaccine" ColumnName="DateOfVaccine" />
+                <ScalarProperty Name="NumberOfVaccine" ColumnName="NumberOfVaccine" />
+                <ScalarProperty Name="Creator_" ColumnName="Creator " />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Patients">
+            <EntityTypeMapping TypeName="healthOrganizationDBModel.Patient">
+              <MappingFragment StoreEntitySet="Patient">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Birth" ColumnName="Birth" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="StartCovid19" ColumnName="StartCovid19" />
+                <ScalarProperty Name="EndCovid19" ColumnName="EndCovid19" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
