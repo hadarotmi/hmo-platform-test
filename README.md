@@ -21,13 +21,11 @@ this project is a Health Maintenance Organization platform to manage COVID-19 va
 
 #### run the project
 - in the terminal navigate to the client folder
-- then install missing packages using npm
 - serve the project
 
 ````
 ```
 cd client
-npm install
 ng serve
 ```
 ````
