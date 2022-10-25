@@ -1,0 +1,39 @@
+
+
+
+<div class="content" >
+    <h1 style="padding-bottom: 50px; color: rgb(222, 118, 127);"><ins>ברוכים הבאים למערכת חברי הקופה</ins></h1>
+    <div>
+      <button  type="button" routerLink="add-patient" routerLinkActive="activelink" class="btn btn-danger"  >הוסף חבר חדש לקופה</button>
+    </div>
+    <table class="table table-striped" >
+    <thead>
+      <tr>
+        <th scope="col">תעודת זהות</th>
+        <th scope="col">שם פרטי</th>
+        <th scope="col">שם משפחה</th>
+        <th scope="col"></th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of patients; ">
+       
+        <td>{{p.Id}}</td>
+        <td>{{p.FirstName}}</td>
+        <td>{{p.LastName}}</td> 
+        <td scope="row"> 
+            <button type="button"  class="btn btn-danger" (click)="Id = p.Id; GetCurrentPatient()">הצג פרטים</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 > <label>מספר חברי הקופה שאינם מחוסנים: {{this.numbernotvaccine}} </label></h5>
+ 
+
+ 
+ 
+</div>
+
+ 
+

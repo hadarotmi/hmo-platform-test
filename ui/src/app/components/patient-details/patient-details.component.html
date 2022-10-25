@@ -1,0 +1,126 @@
+<html>
+
+<body>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <div class="content">
+    <div>
+      <h1 style="text-align: center; color: rgb(222, 118, 127);"><ins>פרטים אישיים של מבוטח בקופת החולים</ins></h1>
+    </div>
+    <button class="btn btn-secondary float-left" routerLink=""
+    routerLinkActive="activelink">חזרה לעמוד הראשי</button>
+    <div>
+      <div style="text-align:center;">
+        <h3 style="text-align: center; color: rgb(222, 118, 127);"><ins>פרטים אישים:</ins></h3>
+        <table class="table table-striped" dir="rtl">
+          <thead>
+            <tr>
+              <td style="color: rgb(222, 118, 127);">תעודת זהות</td>
+              <td id="idPatient">{{patient.Id}}</td>
+            </tr>
+            <tr>
+              <td style="color: rgb(222, 118, 127);">שם פרטי</td>
+              <td *ngIf="upDate==false">{{patient.FirstName}}</td>
+              <input id="firstName" *ngIf="upDate==true" type="text"  class="form-control" value="{{patient.FirstName}}">
+            </tr>
+            <tr>
+              <td style="color: rgb(222, 118, 127);">שם משפחה</td>
+              <td *ngIf="upDate==false">{{patient.LastName}}</td>
+              <input *ngIf="upDate==true" type="text"  class="form-control" value="{{patient.LastName}}" id="lastName">
+            </tr>
+            <tr>
+              <td style="color: rgb(222, 118, 127);">תאריך לידה</td>
+              <td>{{this.patient.Birth.toString().slice(0,10)}}</td>
+            </tr>
+            <tr>
+              <td style="color: rgb(222, 118, 127);">כתובת</td>
+              <td *ngIf="upDate==false">{{patient.Address}}</td>
+              <input *ngIf="upDate==true" type="text"  class="form-control" value="{{patient.Address}}" id="address">
+            </tr>
+            <tr>
+              <td style="color: rgb(222, 118, 127);">טלפון</td>
+              <td *ngIf="upDate==false">{{patient.Telephone}}</td>
+              <input *ngIf="upDate==true" type="text"  class="form-control" value="{{patient.Telephone}}" id="telephone">
+            </tr>
+            <tr>
+              <td style="color: rgb(222, 118, 127);">פלאפון</td>
+              <td *ngIf="upDate==false">{{patient.Phone}}</td>
+              <input *ngIf="upDate==true"  class="form-control" type="text" value="{{patient.Phone}}" id="phone">
+            </tr>
+          </thead>
+        </table>
+      </div>
+
+
+
+      <div>
+
+        <h3 style="text-align: center; color: rgb(222, 118, 127);"><ins>פירוט חיסונים למטופל</ins></h3>
+        <table class="table table-striped" dir="rtl">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col"></th>
+              <th scope="col" style="color: rgb(222, 118, 127);">מועד חיסון </th>
+              <th scope="col" style="color: rgb(222, 118, 127);">יצרן</th>
+            
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let v of VaccinesToPatient; ">
+              <th scope="row">
+
+              </th >
+              <td>{{v.DateOfVaccine.toString().slice(0,10)}}</td>
+              <td>{{v.Creator}}</td>
+            </tr>
+            <tr *ngIf="numberofvaccine==true">
+             
+              <th scope="row">
+
+              </th > 
+              <td><input type="date" id="dateVaccine" class="form-control"></td>
+              <td>
+                <select  class="form-control"   id="creator">
+                  <option value="פייזר">פייזר</option>
+                  <option value="מודרנה">מודרנה</option>
+                  <option value="אסטרהזניקה">אסטרהזניקה</option>
+                  <option value="נובהווקס">נובהווקס</option>
+                </select></td>
+         
+             
+            </tr>
+          </tbody>
+          <button class="btn btn-danger" *ngIf="VaccinesToPatient.length<4" (click)="AddVaccine(); ">הוסף חיסון</button>
+
+        </table>
+
+        <div style="text-align: center !important; ">
+          <br />
+
+          <h3 style="color: rgb(222, 118, 127); "><ins>חולה/מחלים</ins></h3>
+          <h5 style="color: rgb(222, 118, 127);">תאריך חולי</h5>
+          <h6 *ngIf="upDate==false && patient.StartCovid19==null" >לא חלה בקורונה</h6>
+          <h6 *ngIf="upDate==false || patient.StartCovid19!=null" >{{patient.StartCovid19.toString().slice(0,10)}}</h6>
+          <input *ngIf="upDate==true && patient.StartCovid19==null"  class="form-control" type="date" value="{{patient.StartCovid19}}"
+            id="startcovid19">
+        </div>
+        <div style="text-align: center;">
+          <h5 style="color: rgb(222, 118, 127);">תאריך החלמה</h5>
+          <h6 *ngIf="upDate==false && patient.EndCovid19==null&&patient.StartCovid19!=null" >עדיין לא החלים</h6>
+          <h6 *ngIf="upDate==false || patient.EndCovid19!=null" >{{patient.EndCovid19.toString().slice(0,10)}}</h6>
+          <input *ngIf="upDate==true && patient.StartCovid19!=null&&patient.EndCovid19==null"  class="form-control" type="date" value="{{patient.EndCovid19}}"
+            id="endcovid19">
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="col-md-12">
+        <button class="btn btn-danger float-right" style="margin-left: 20px;" (click)="UpdatePatient()">עדכון חבר קופה</button>
+        <button class="btn btn-danger float-right" (click)="DeletePatient()">מחיקת חבר קופה</button>
+
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>
